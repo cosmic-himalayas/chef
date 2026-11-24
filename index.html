@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>CHEF Survey</title>
   <meta name="description" content="The Cosmic Himalayas Extended Field (CHEF): deep multiwavelength imaging and the CHEF2026 master catalog around the densest quasar overdensity in the SDSS footprint.">
-  <link rel="icon" href="assets/favicon_night.png" media="(prefers-color-scheme: dark)">
-  <link rel="icon" href="assets/favicon_day.png" media="(prefers-color-scheme: light)">
+  <link rel="icon" id="favicon" href="assets/favicon_night.png">
+  <script src="assets/theme.js"></script>
   <link rel="stylesheet" href="assets/style.css">
 </head>
 <body>
@@ -15,18 +15,22 @@
   <header class="top">
     <div class="wrap top-row">
       <a class="brand" href="#">
-        <picture>
-          <source srcset="assets/chef_mark_day.png" media="(prefers-color-scheme: light)">
-          <img src="assets/chef_mark_night.png" alt="" width="30" height="30">
-        </picture>
+        <img class="night" src="assets/chef_mark_night.png" alt="" width="30" height="30">
+        <img class="day" src="assets/chef_mark_day.png" alt="" width="30" height="30">
         CHEF
       </a>
-      <nav aria-label="Sections">
-        <a href="#catalog">Catalog</a>
-        <a href="#viewer">Viewer</a>
-        <a href="#data">Data</a>
-        <a href="#papers">Papers</a>
-      </nav>
+      <div class="top-right">
+        <nav aria-label="Sections">
+          <a href="#catalog">Catalog</a>
+          <a href="#viewer">Viewer</a>
+          <a href="#data">Data</a>
+          <a href="#papers">Papers</a>
+        </nav>
+        <button class="theme" id="theme-switch" type="button" aria-label="Switch between day and night themes" title="Day / night">
+          <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2.2M12 19.3v2.2M4.6 4.6l1.6 1.6M17.8 17.8l1.6 1.6M2.5 12h2.2M19.3 12h2.2M4.6 19.4l1.6-1.6M17.8 6.2l1.6-1.6"/></svg>
+          <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.8 6.8 0 0 0 10.7 10.7z"/></svg>
+        </button>
+      </div>
     </div>
   </header>
 

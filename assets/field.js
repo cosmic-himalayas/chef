@@ -1,6 +1,7 @@
 // Sky map of the hero: a random sample of the catalog's bright objects as stars and the 11 quasars of the Cosmic
 // Himalayas as glowing points, in a tangent-plane projection with right ascension increasing to the left.
-// Colours come from the CSS variables --star and --qso, so the map follows the light and dark themes.
+// Colours come from the CSS variables --star and --qso, so the map follows the light and dark themes, including the
+// day / night switch (data-theme on <html>).
 (() => {
   const canvas = document.getElementById('field');
   if (!canvas) return;
@@ -88,6 +89,7 @@
       requestAnimationFrame(draw);
       if (!motion) window.addEventListener('resize', () => requestAnimationFrame(draw));
       window.matchMedia('(prefers-color-scheme: light)').addEventListener('change', () => requestAnimationFrame(draw));
+      new MutationObserver(() => requestAnimationFrame(draw)).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
     })
     .catch((error) => {
       canvas.replaceWith(Object.assign(document.createElement('p'), { textContent: 'The sky map could not be loaded.' }));
