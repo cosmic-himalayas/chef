@@ -236,6 +236,7 @@ h3 { margin: 0 0 12px; font-size: 16px; font-weight: 650; }
 .log li { display: flex; gap: 16px; }
 .log time { min-width: 120px; color: var(--muted); font-family: var(--mono); font-size: 13px; padding-top: 1px; }
 .paper { max-width: 860px; }
+.paper + .paper { margin-top: 14px; }
 .paper-title { margin: 14px 0 8px; font-size: 18px; font-weight: 600; line-height: 1.45; }
 .paper-meta { margin: 0; color: var(--text-2); font-size: 14.5px; }
 .sub { margin-top: 36px; color: var(--text-2); font-weight: 600; }
