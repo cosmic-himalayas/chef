@@ -1,5 +1,6 @@
 /* CHEF survey page: deep night-sky ground with indigo and violet glows (dark) or cool white (light);
-   periwinkle-to-lavender accent. */
+   periwinkle-to-lavender accent. Four hues (blue, violet, orchid, starlight gold) tell the items of a group apart:
+   a class hue-* sets --hue, and the rules below use it for icons, thin edges and a faint tint of the box. */
 :root {
   --bg: #04050b;
   --bg-2: #080b19;
@@ -19,6 +20,13 @@
   --star: 226, 232, 255;
   --qso: 199, 210, 254;
   --accent-shadow: rgba(129, 140, 248, 0.45);
+  --blue: #7ea6ff;
+  --violet: #ac90ff;
+  --orchid: #e08fd0;
+  --gold: #e6cb86;
+  --sky: #9ccdf7;
+  --rose: #e88ba0;
+  --tint: 15%;
   --stars-opacity: 0.55;
   --shadow: 0 30px 80px -40px rgba(0, 0, 0, 0.9);
   --r: 18px;
@@ -48,6 +56,13 @@
     --star: 30, 36, 70;
     --qso: 79, 70, 229;
     --accent-shadow: rgba(79, 70, 229, 0.35);
+    --blue: #2f5bd8;
+    --violet: #6b3fd4;
+    --orchid: #a83292;
+    --gold: #94700f;
+    --sky: #2b7fb8;
+    --rose: #b23a5c;
+    --tint: 9%;
     --stars-opacity: 0;
     --shadow: 0 30px 70px -45px rgba(20, 30, 80, 0.3);
     color-scheme: light;
@@ -72,6 +87,13 @@
   --star: 30, 36, 70;
   --qso: 79, 70, 229;
   --accent-shadow: rgba(79, 70, 229, 0.35);
+  --blue: #2f5bd8;
+  --violet: #6b3fd4;
+  --orchid: #a83292;
+  --gold: #94700f;
+  --sky: #2b7fb8;
+  --rose: #b23a5c;
+  --tint: 9%;
   --stars-opacity: 0;
   --shadow: 0 30px 70px -45px rgba(20, 30, 80, 0.3);
   color-scheme: light;
@@ -114,6 +136,14 @@ a:hover { text-decoration-color: currentColor; }
   -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 55%, transparent 100%);
   mask-image: linear-gradient(to bottom, #000 0%, #000 55%, transparent 100%);
 }
+
+/* hues: one per item of a group */
+.hue-blue { --hue: var(--blue); }
+.hue-violet { --hue: var(--violet); }
+.hue-orchid { --hue: var(--orchid); }
+.hue-gold { --hue: var(--gold); }
+.hue-sky { --hue: var(--sky); }
+.hue-rose { --hue: var(--rose); }
 
 /* header */
 .top {
@@ -191,6 +221,8 @@ h1 {
 }
 .button.primary .tag { border-color: rgba(0, 0, 0, 0.18); color: inherit; background: rgba(255, 255, 255, 0.22); }
 
+.kicker[class*="hue-"] { color: color-mix(in srgb, var(--hue) 80%, var(--muted)); }
+
 /* the sky map */
 .map {
   margin: 0; padding: 14px; border-radius: 24px;
@@ -207,9 +239,14 @@ h1 {
 .key.qso { background: rgb(var(--qso)); box-shadow: 0 0 10px rgb(var(--qso)); }
 
 .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin: 56px 0 0; }
-.stats div { padding: 20px 22px; border-radius: var(--r); border: 1px solid var(--line); background: var(--card); }
+.stats div {
+  position: relative; overflow: hidden; padding: 20px 22px; border-radius: var(--r);
+  border: 1px solid color-mix(in srgb, var(--hue) 20%, var(--line));
+  background: radial-gradient(130% 120% at 0% 0%, color-mix(in srgb, var(--hue) var(--tint), transparent), transparent 65%), var(--card);
+}
+.stats div::before { content: ""; position: absolute; left: 0; top: 20px; bottom: 20px; width: 3px; border-radius: 0 3px 3px 0; background: var(--hue); }
 .stats dt { color: var(--muted); font-size: 13px; }
-.stats dd { margin: 6px 0 0; font-family: var(--display); font-weight: 600; font-size: 28px; letter-spacing: -0.02em; }
+.stats dd { margin: 6px 0 0; font-family: var(--display); font-weight: 600; font-size: 28px; letter-spacing: -0.02em; color: color-mix(in srgb, var(--hue) 45%, var(--text)); }
 
 /* sections */
 .block { padding: 88px 0 24px; }
@@ -223,29 +260,49 @@ h3 { margin: 0 0 12px; font-size: 16px; font-weight: 650; }
   background: linear-gradient(var(--card), var(--card)) padding-box,
               linear-gradient(160deg, var(--line-hi), var(--line) 40%, var(--line)) border-box;
 }
+.panel[class*="hue-"], .card {
+  border-color: transparent;
+  background: radial-gradient(120% 90% at 0% 0%, color-mix(in srgb, var(--hue) var(--tint), transparent), transparent 62%) padding-box,
+              linear-gradient(var(--card), var(--card)) padding-box,
+              linear-gradient(160deg, color-mix(in srgb, var(--hue) 46%, transparent), var(--line) 46%, var(--line)) border-box;
+}
+.icon {
+  display: grid; place-items: center; width: 42px; height: 42px; border-radius: 13px; flex: none;
+  color: var(--hue); background: color-mix(in srgb, var(--hue) 15%, transparent);
+  border: 1px solid color-mix(in srgb, var(--hue) 32%, transparent);
+}
+.icon svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+.panel-head { display: flex; align-items: center; gap: 14px; margin-bottom: 14px; }
+.panel-head h3 { margin: 0; }
 .bands { width: 100%; border-collapse: collapse; font-size: 14.5px; }
-.bands th { width: 32%; padding: 9px 10px 9px 0; color: var(--muted); font-weight: 500; text-align: left; vertical-align: top; }
-.bands td { padding: 9px 0; color: var(--text-2); }
+.bands th { width: 32%; padding: 9px 14px 9px 0; white-space: nowrap; color: var(--muted); font-weight: 500; text-align: left; vertical-align: top; }
+.bands th::before {
+  content: ""; display: inline-block; width: 8px; height: 8px; margin-right: 10px; border-radius: 50%; vertical-align: 1px;
+  background: var(--hue); box-shadow: 0 0 9px color-mix(in srgb, var(--hue) 55%, transparent);
+}
+.bands td { padding: 9px 0; vertical-align: top; color: var(--text-2); }
 .bands tr + tr th, .bands tr + tr td { border-top: 1px solid var(--line); }
 .ticks { margin: 0; padding: 0; list-style: none; font-size: 14.5px; color: var(--text-2); }
 .ticks li { position: relative; padding: 7px 0 7px 22px; }
-.ticks li::before { content: ""; position: absolute; left: 2px; top: 16px; width: 8px; height: 8px; border-radius: 50%; background: var(--grad); }
+.ticks li::before { content: ""; position: absolute; left: 2px; top: 16px; width: 8px; height: 8px; border-radius: 50%; background: var(--hue); }
 .cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px; }
-.card { transition: transform 0.25s ease; }
-.card:hover { transform: translateY(-3px); }
-.card .num { display: block; margin-bottom: 26px; font-family: var(--mono); font-size: 12.5px; color: var(--muted); }
+.card { transition: transform 0.25s ease, box-shadow 0.25s ease; }
+.card:hover { transform: translateY(-3px); box-shadow: 0 18px 44px -26px var(--hue); }
+.card .icon { margin-bottom: 22px; }
+.card h3 { color: color-mix(in srgb, var(--hue) 40%, var(--text)); }
 .card p { margin: 0; color: var(--text-2); font-size: 14.5px; }
 .note {
   max-width: 760px; margin: 8px 0 28px; padding: 16px 18px; border-radius: 14px;
   border: 1px solid var(--line); background: var(--card);
   color: var(--text-2); font-size: 14.5px;
-  box-shadow: inset 3px 0 0 0 rgba(var(--qso), 0.9);
+  box-shadow: inset 3px 0 0 0 var(--gold);
 }
 .log { margin: 0; padding: 0; list-style: none; color: var(--text-2); font-size: 14.5px; }
 .log li { display: flex; gap: 16px; }
 .log time { min-width: 120px; color: var(--muted); font-family: var(--mono); font-size: 13px; padding-top: 1px; }
 .paper { max-width: 860px; }
 .paper + .paper { margin-top: 14px; }
+.paper .tag { color: var(--hue); border-color: color-mix(in srgb, var(--hue) 42%, transparent); background: color-mix(in srgb, var(--hue) 10%, transparent); }
 .paper-title { margin: 14px 0 8px; font-size: 18px; font-weight: 600; line-height: 1.45; }
 .paper-meta { margin: 0; color: var(--text-2); font-size: 14.5px; }
 .sub { margin-top: 36px; color: var(--text-2); font-weight: 600; }
