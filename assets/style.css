@@ -345,3 +345,32 @@ h3 { margin: 0 0 12px; font-size: 16px; font-weight: 650; }
   .brand-text { display: none; }
   nav a { padding: 6px 6px; }
 }
+
+/* real sky behind the hero, the ridgeline of quasar density and the filter curves */
+:root { --ring: 238, 214, 150; --photo-opacity: 0.22; }
+@media (prefers-color-scheme: light) { :root:not([data-theme="dark"]) { --photo-opacity: 0; } }
+:root[data-theme="light"] { --photo-opacity: 0; }
+.glow::before {
+  content: ""; position: absolute; inset: 0; opacity: var(--photo-opacity);
+  background: url("chef_field_gri.jpg") center 30% / cover no-repeat;
+  -webkit-mask-image: radial-gradient(120% 85% at 50% 20%, #000 35%, transparent 80%);
+  mask-image: radial-gradient(120% 85% at 50% 20%, #000 35%, transparent 80%);
+}
+.key.ring { background: transparent; border: 1.5px solid var(--gold); width: 10px; height: 10px; }
+.map canvas { aspect-ratio: 1.2; background: #05060c; }
+.ridge-figure, .filter-figure { margin: 0; }
+.ridges, .filters { display: block; width: 100%; height: auto; overflow: visible; }
+.ridge-fill { fill: var(--bg); }
+.ridge { fill: none; stroke: color-mix(in srgb, var(--blue) calc(var(--k) * 100%), var(--violet)); stroke-width: 1.3; opacity: 0.9; }
+.ridge-hot { fill: none; stroke: var(--gold); stroke-width: 2.4; }
+.ridge-lead { stroke: var(--gold); stroke-width: 1.2; }
+.ridge-label { fill: var(--gold); font-size: 15px; font-weight: 650; letter-spacing: 0.02em; }
+.ridge-tick, .filter-tick, .filter-group { fill: var(--muted); font-family: var(--mono); font-size: 12px; }
+.filter-group { font-family: var(--font); font-size: 12.5px; }
+.ridge-figure figcaption, .filter-figure figcaption { margin-top: 10px; color: var(--muted); font-size: 13px; }
+.filter-figure { margin-top: 20px; }
+.filter { fill: color-mix(in srgb, var(--hue) 20%, transparent); stroke: var(--hue); stroke-width: 1.2; }
+.filter-nb { fill: color-mix(in srgb, var(--hue) 45%, transparent); stroke-width: 1.6; }
+.filter-line { stroke: var(--text-2); stroke-width: 1; stroke-dasharray: 4 4; }
+.filter-line-label { fill: var(--text-2); font-size: 12.5px; }
+.filter-axis { stroke: var(--line-hi); stroke-width: 1; }
