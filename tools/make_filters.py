@@ -61,20 +61,14 @@ groups = (('ultraviolet', 0.15, 0.25), ('optical', 0.35, 1.0), ('near-infrared',
           ('far-infrared', 250, 850))
 for name, a, b in groups:
     out.append(f'<text class="filter-group" x="{x(math.sqrt(a * b)):.1f}" y="{BASE + 44}" text-anchor="middle">{name}</text>')
-# arrows to the data beyond the bands of the catalog
-ay = BASE - 58
-out.append('<defs><marker id="filter-head" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" '
-           'orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="filter-head"/></marker></defs>')
-out.append(f'<line class="filter-arrow" x1="{X0 - 14}" y1="{ay}" x2="18" y2="{ay}" marker-end="url(#filter-head)"/>')
-out.append(f'<text class="filter-far" x="22" y="{ay - 12}">X-ray</text>')
-out.append(f'<text class="filter-far-sub" x="22" y="{ay + 20}">Chandra ACIS-I</text>')
-out.append(f'<text class="filter-far-sub" x="22" y="{ay + 36}">0.5&#8211;7 keV</text>')
-out.append(f'<line class="filter-arrow" x1="{X1 + 14}" y1="{ay}" x2="{W - 18}" y2="{ay}" marker-end="url(#filter-head)"/>')
-rx = X1 + 20
-out.append(f'<text class="filter-far" x="{rx}" y="{ay - 12}">millimetre and radio</text>')
-for k, line in enumerate(('ALMA Bands 7, 4, 3', 'uGMRT 650 MHz', 'MeerKAT 1.28 GHz')):
-    out.append(f'<text class="filter-far-sub" x="{rx}" y="{ay + 20 + 16 * k}">{line}</text>')
-out.append(f'<text class="filter-coming" x="{W - 18}" y="{BASE + 44}" text-anchor="end">coming</text>')
-out.append(f'<text class="filter-coming" x="18" y="{BASE + 44}">coming</text>')
+# the data beyond the catalog bands: the axis continues as a dashed line at both ends, with a tag for the facilities
+def tag(cx, cy, text, hue):
+    w = 7.0 * len(text.replace('&#183;', '.')) + 22
+    out.append(f'<g class="filter-far hue-{hue}"><rect x="{cx - w / 2:.1f}" y="{cy - 12}" width="{w:.1f}" height="24" rx="12"/>'
+               f'<text x="{cx:.1f}" y="{cy + 4}" text-anchor="middle">{text}</text></g>')
+out.append(f'<line class="filter-ext" x1="{X0 - 6}" y1="{BASE}" x2="14" y2="{BASE}"/>')
+out.append(f'<line class="filter-ext" x1="{X1 + 6}" y1="{BASE}" x2="{W - 14}" y2="{BASE}"/>')
+tag((14 + X0 - 6) / 2, BASE - 40, 'Chandra X-ray', 'violet')
+tag((X1 + 6 + W - 14) / 2, BASE - 40, 'ALMA &#183; uGMRT &#183; MeerKAT', 'rose')
 out.append('</svg>')
 print('\n'.join(out))
