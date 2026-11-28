@@ -374,3 +374,8 @@ h3 { margin: 0 0 12px; font-size: 16px; font-weight: 650; }
 .filter-line { stroke: var(--text-2); stroke-width: 1; stroke-dasharray: 4 4; }
 .filter-line-label { fill: var(--text-2); font-size: 12.5px; }
 .filter-axis { stroke: var(--line-hi); stroke-width: 1; }
+.filter-arrow { stroke: var(--text-2); stroke-width: 1.4; }
+.filter-head { fill: var(--text-2); }
+.filter-far { fill: var(--text); font-size: 13px; font-weight: 600; }
+.filter-far-sub { fill: var(--text-2); font-size: 12px; }
+.filter-coming { fill: var(--gold); font-family: var(--mono); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; }

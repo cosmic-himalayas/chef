@@ -19,9 +19,10 @@ BANDS = [  # file stem, label, hue class
     ('spire_250', '250', 'rose'), ('spire_350', '350', 'rose'), ('spire_500', '500', 'rose'), ('scuba2_850', '850', 'rose'),
 ]
 L0, L1 = math.log10(0.12), math.log10(1100.0)      # micrometres
-W, H, BASE, AMP = 1000, 246, 170, 110
+W, H, BASE, AMP = 1200, 246, 170, 110
+X0, X1 = 170, 1000  # the logarithmic axis; the margins hold the arrows
 Z = 2.18
-x = lambda um: 30 + (W - 60) * (math.log10(um) - L0) / (L1 - L0)
+x = lambda um: X0 + (X1 - X0) * (math.log10(um) - L0) / (L1 - L0)
 
 def curve(path):
     pts = []
@@ -51,7 +52,7 @@ for name, rest in (('Ly&#945;', 0.121567), ('H&#945;', 0.656461)):
     lx = x(rest * (1 + Z))
     out.append(f'<line class="filter-line" x1="{lx:.1f}" y1="{BASE - AMP - 22}" x2="{lx:.1f}" y2="{BASE}"/>')
     out.append(f'<text class="filter-line-label" x="{lx + 5:.1f}" y="{BASE - AMP - 12}">{name} at z = {Z}</text>')
-out.append(f'<line class="filter-axis" x1="30" y1="{BASE}" x2="{W - 30}" y2="{BASE}"/>')
+out.append(f'<line class="filter-axis" x1="{X0}" y1="{BASE}" x2="{X1}" y2="{BASE}"/>')
 for um in (0.2, 0.5, 1, 2, 5, 10, 20, 50, 100, 200, 500, 1000):
     out.append(f'<line class="filter-axis" x1="{x(um):.1f}" y1="{BASE}" x2="{x(um):.1f}" y2="{BASE + 5}"/>')
     out.append(f'<text class="filter-tick" x="{x(um):.1f}" y="{BASE + 20}" text-anchor="middle">{um:g}</text>')
@@ -60,5 +61,20 @@ groups = (('ultraviolet', 0.15, 0.25), ('optical', 0.35, 1.0), ('near-infrared',
           ('far-infrared', 250, 850))
 for name, a, b in groups:
     out.append(f'<text class="filter-group" x="{x(math.sqrt(a * b)):.1f}" y="{BASE + 44}" text-anchor="middle">{name}</text>')
+# arrows to the data beyond the bands of the catalog
+ay = BASE - 58
+out.append('<defs><marker id="filter-head" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" '
+           'orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="filter-head"/></marker></defs>')
+out.append(f'<line class="filter-arrow" x1="{X0 - 14}" y1="{ay}" x2="18" y2="{ay}" marker-end="url(#filter-head)"/>')
+out.append(f'<text class="filter-far" x="22" y="{ay - 12}">X-ray</text>')
+out.append(f'<text class="filter-far-sub" x="22" y="{ay + 20}">Chandra ACIS-I</text>')
+out.append(f'<text class="filter-far-sub" x="22" y="{ay + 36}">0.5&#8211;7 keV</text>')
+out.append(f'<line class="filter-arrow" x1="{X1 + 14}" y1="{ay}" x2="{W - 18}" y2="{ay}" marker-end="url(#filter-head)"/>')
+rx = X1 + 20
+out.append(f'<text class="filter-far" x="{rx}" y="{ay - 12}">millimetre and radio</text>')
+for k, line in enumerate(('ALMA Bands 7, 4, 3', 'uGMRT 650 MHz', 'MeerKAT 1.28 GHz')):
+    out.append(f'<text class="filter-far-sub" x="{rx}" y="{ay + 20 + 16 * k}">{line}</text>')
+out.append(f'<text class="filter-coming" x="{W - 18}" y="{BASE + 44}" text-anchor="end">coming</text>')
+out.append(f'<text class="filter-coming" x="18" y="{BASE + 44}">coming</text>')
 out.append('</svg>')
 print('\n'.join(out))
