@@ -377,3 +377,19 @@ h3 { margin: 0 0 12px; font-size: 16px; font-weight: 650; }
 .filter-ext { stroke: var(--line-hi); stroke-width: 1; stroke-dasharray: 3 5; }
 .filter-far rect { fill: color-mix(in srgb, var(--hue) 12%, transparent); stroke: color-mix(in srgb, var(--hue) 55%, transparent); stroke-width: 1; stroke-dasharray: 4 3; }
 .filter-far text { fill: var(--hue); font-family: var(--mono); font-size: 11.5px; letter-spacing: 0.04em; }
+
+/* telescope gallery */
+.scopes { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; }
+@media (min-width: 1000px) { .scopes { grid-template-columns: repeat(7, 1fr); } }
+.scope { margin: 0; border-radius: 14px; overflow: hidden; border: 1px solid var(--line); background: var(--card); display: flex; flex-direction: column; }
+.scope img { display: block; width: 100%; aspect-ratio: 3 / 2; height: auto; object-fit: cover; background: #000; transition: transform 0.4s ease; }
+.scope.contain img { object-fit: contain; }
+.scope:hover img { transform: scale(1.04); }
+.scope figcaption { display: flex; flex-direction: column; gap: 3px; padding: 10px 12px 11px; }
+.scope-name { display: flex; align-items: center; gap: 8px; font-weight: 650; font-size: 14px; }
+.scope-data { color: var(--text-2); font-family: var(--mono); font-size: 11.5px; line-height: 1.45; }
+.scope-credit { margin-top: 4px; color: var(--muted); font-size: 10.5px; line-height: 1.35; overflow-wrap: anywhere; }
+.scope-credit a { color: inherit; }
+.soon { padding: 1px 7px; border-radius: 999px; border: 1px dashed color-mix(in srgb, var(--gold) 60%, transparent); color: var(--gold); font-family: var(--mono); font-size: 10px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; }
+.scope-note { margin: 14px 0 0; color: var(--muted); font-size: 12.5px; }
+@media (prefers-reduced-motion: reduce) { .scope img { transition: none; } }
